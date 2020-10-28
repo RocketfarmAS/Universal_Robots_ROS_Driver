@@ -27,10 +27,12 @@
   <arg name="tool_device_name" default="/tmp/ttyUR" doc="Local device name used for tool communication. Only used, when `use_tool_communication` is set to true."/>
   <arg name="tool_tcp_port" default="54321" doc="Port on which the robot controller publishes the tool comm interface. Only used, when `use_tool_communication` is set to true."/>
   <arg name="headless_mode" default="false" doc="Automatically send URScript to robot to execute. On e-Series this does require the robot to be in 'remote-control' mode. With this, the URCap is not needed on the robot."/>
+  <arg name="dashboard_receive_timeout" default="1" doc="Timeout after which a call to the dashboard server will be considered failure if no answer has been received."/>
 
   <!-- Load hardware interface -->
   <node name="ur_hardware_interface" pkg="ur_robot_driver" type="ur_robot_driver_node" output="screen" launch-prefix="$(arg launch_prefix)" required="true">
     <param name="robot_ip" type="str" value="$(arg robot_ip)"/>
+    <param name="dashboard/receive_timeout" type="int" value="$(arg dashboard_receive_timeout)"/>
     <param name="reverse_port" type="int" value="$(arg reverse_port)"/>
     <param name="script_sender_port" type="int" value="$(arg script_sender_port)"/>
     <rosparam command="load" file="$(arg kinematics_config)" />
